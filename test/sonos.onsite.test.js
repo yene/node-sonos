@@ -20,6 +20,7 @@ describe('Search Music Library', function () {
       device.setVolume(volumeToSet, function (err) {
         if (err) return done(err)
         device.getVolume(function (err, currentVolume) {
+          if (err) return done(err)
           assert.equal(volumeToSet, currentVolume)
           done()
         })
