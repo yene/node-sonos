@@ -5,9 +5,16 @@ const sonos = require('../')
 describe('On site Sonos', function () {
   var device = null
   before(function (done) {
-    sonos.search(function (dev) {
+    var search = sonos.search()
+    search.once('DeviceAvailable', function (dev) {
       device = dev
       done()
+    })
+  })
+
+  describe('play', () => {
+    it('resumes playlist', (done) => {
+      device.play(done)
     })
   })
 
@@ -19,14 +26,14 @@ describe('On site Sonos', function () {
   })
 
   describe('Favorites Radio', function () {
-    var device = null
-
-    before(function (done) {
-      sonos.search(function (dev) {
-        device = dev
-        done()
-      })
-    })
+    // var device = null
+    //
+    // before(function (done) {
+    //   sonos.search(function (dev) {
+    //     device = dev
+    //     done()
+    //   })
+    // })
 
     it('should return favorite radio stations', function (done) {
       device.getFavoritesRadioStations({}, function (err, result) {
